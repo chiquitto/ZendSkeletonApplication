@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+  ServerName zf2napratica.dev
+  DocumentRoot /home/alisson/Trabalho/zf2napratica/public
+  SetEnv APPLICATION_ENV "development"
+  SetEnv PROJECT_ROOT "/home/alisson/Trabalho/zf2napratica/public" 
+  <Directory /home/alisson/Trabalho/zf2napratica/public>
+     DirectoryIndex index.php
+     AllowOverride All
+     Order allow,deny
+     Allow from all
+  </Directory>
+</VirtualHost>
