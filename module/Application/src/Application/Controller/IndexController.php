@@ -3,6 +3,8 @@
 namespace Application\Controller;
 
 use Core\Controller\ActionController;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends ActionController
@@ -13,8 +15,18 @@ class IndexController extends ActionController
      * @return void
      */
     public function indexAction() {
+        $post = $this->getTable('Application\Model\Post');
+        $sql = $post->getSql();
+        $select = $sql->select();
+
+        $paginatorAdapter = new DbSelect($select, $sql);
+        $paginator = new Paginator($paginatorAdapter);
+        $paginator->setCurrentPageNumber($this->params()->fromRoute('page'));
+        
+        // print_r($paginator);exit;
+
         return new ViewModel(array(
-            'posts' => $this->getTable('Application\Model\Post')->fetchAll()->toArray()
+            'posts' => $paginator
         ));
     }
 
@@ -28,12 +40,12 @@ class IndexController extends ActionController
         $post = $this->getTable('Application\Model\Post')
                 ->get($id)
                 ->toArray()
-                ;
-        
+        ;
+
         $post['comentarios'] = $this->getTable('Application\Model\Comment')
                 ->fetchAll(null, "post_id = $id")
                 ->toArray()
-                ;
+        ;
 
         return new ViewModel(array(
             'post' => $post,
