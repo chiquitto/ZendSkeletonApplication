@@ -1,21 +1,43 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Core\Controller\ActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class IndexController extends ActionController
 {
-    public function indexAction()
-    {
-        return new ViewModel();
+
+    /**
+     * Mostra os posts cadastrados
+     * @return void
+     */
+    public function indexAction() {
+        return new ViewModel(array(
+            'posts' => $this->getTable('Application\Model\Post')->fetchAll()->toArray()
+        ));
     }
+
+    public function postAction() {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if ($id == 0) {
+            throw new \Exception("Código obrigatório");
+        }
+
+        // Selecionar Post
+        $post = $this->getTable('Application\Model\Post')
+                ->get($id)
+                ->toArray()
+                ;
+        
+        $post['comentarios'] = $this->getTable('Application\Model\Comment')
+                ->fetchAll(null, "post_id = $id")
+                ->toArray()
+                ;
+
+        return new ViewModel(array(
+            'post' => $post,
+        ));
+    }
+
 }
