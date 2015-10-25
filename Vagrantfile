@@ -4,7 +4,9 @@
 VAGRANTFILE_API_VERSION = '2'
 
 @script = <<SCRIPT
-DOCUMENT_ROOT="/var/www/ZendSkeletonApplication/public"
+PROJECT_NAME="ZendSkeletonApplication"
+PROJECT_ROOT="/var/www/$PROJECT_NAME"
+DOCUMENT_ROOT="$PROJECT_ROOT/public"
 #MYSQL_ROOT_PASSWORD="123456"
 #sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD'
 #sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD'
@@ -13,7 +15,7 @@ apt-get install -y apache2 git curl php5-cli php5 php5-intl libapache2-mod-php5
 #apt-get install -y mysql-server apache2 libapache2-mod-php5 php5 php5-mysql git curl php5-cli php5 php5-intl
 echo "
 <VirtualHost *:80>
-    ServerName ZendSkeletonApplication
+    ServerName $PROJECT_NAME
     DocumentRoot $DOCUMENT_ROOT
     <Directory $DOCUMENT_ROOT>
         DirectoryIndex index.php
@@ -21,13 +23,14 @@ echo "
         Order allow,deny
         Allow from all
     </Directory>
+    SetEnv PROJECT_ROOT $PROJECT_ROOT
 </VirtualHost>
-" > /etc/apache2/sites-available/ZendSkeletonApplication.conf
+" > /etc/apache2/sites-available/$PROJECT_NAME.conf
 a2enmod rewrite
 a2dissite 000-default
-a2ensite ZendSkeletonApplication
+a2ensite $PROJECT_NAME
 service apache2 restart
-cd /var/www/ZendSkeletonApplication
+cd /var/www/$PROJECT_NAME
 curl -Ss https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 chmod +x /usr/local/bin/composer
