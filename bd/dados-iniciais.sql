@@ -1,4 +1,9 @@
-
+INSERT INTO `users` (`username`, `password`, `name`, `valid`, `role`) VALUES
+    ('admin', md5('admin'), 'Alisson Chiquitto', '1', 'admin'),
+    ('eminetto', md5('teste'), 'Elton Minetto', 1, 'admin'),
+    ('steve', md5('teste'), 'Steve Jobs', 1, 'redator'),
+    ('bill', md5('teste'), 'Bill Gates', 1, 'visitante')
+;
 
 INSERT INTO `posts` (`title`, `description`) VALUES ('Post 1', 'Descricao 1');
 INSERT INTO `posts` (`title`, `description`) VALUES ('Post 2', 'Descricao 2');

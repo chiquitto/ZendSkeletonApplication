@@ -21,10 +21,9 @@ class IndexController extends ActionController
 
         $paginatorAdapter = new DbSelect($select, $sql);
         $paginator = new Paginator($paginatorAdapter);
+        // $paginator->setCache($this->getServiceLocator()->get('Cache'));
         $paginator->setCurrentPageNumber($this->params()->fromRoute('page'));
         
-        // print_r($paginator);exit;
-
         return new ViewModel(array(
             'posts' => $paginator
         ));

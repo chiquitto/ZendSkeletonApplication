@@ -15,6 +15,12 @@
     </tr>
   </thead>
   <tbody>
+    <?php
+    // $posts = $this->posts;
+    
+    /* @var $posts Zend\Paginator\Paginator */
+    // print_r($posts->getIterator());exit;
+    ?>
     <?php foreach($this->posts as $post) { ?>
       <tr>
         <td><a href="/application/index/post/id/<?php echo $post['id'] ;?>"><?php echo $this->escapeHtml($post['title']);?></a></td>

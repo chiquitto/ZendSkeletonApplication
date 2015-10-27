@@ -4,6 +4,7 @@ return array(
         'Application',
         'Core',
         //'Skel'
+        'Admin',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(
@@ -13,5 +14,8 @@ return array(
             './module',
             './vendor',
         ),
+    ),
+    'cache' => array(
+        'adapter' => 'memory',
     ),
 );
