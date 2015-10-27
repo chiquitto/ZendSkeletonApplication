@@ -9,13 +9,20 @@
 
 namespace Application;
 
+use Zend\I18n\Translator\Translator;
 use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
-    public function onBootstrap($e)
+    public function onBootstrap(MvcEvent $e)
     {
-        $e->getApplication()->getServiceManager()->get('translator');
+        $app = $e->getApplication();
+        
+        /* @var $translator Translator */
+        $translator = $app->getServiceManager()->get('translator');
+        // $translator->setCache($e->getApplication()->getServiceManager()->get('Cache'));
+        
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
