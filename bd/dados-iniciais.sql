@@ -19,3 +19,7 @@ INSERT INTO `posts` (`title`, `description`) VALUES ('Post 11', 'Descricao 11');
 INSERT INTO `posts` (`title`, `description`) VALUES ('Post 12', 'Descricao 12');
 INSERT INTO `posts` (`title`, `description`) VALUES ('Post 13', 'Descricao 13');
 
+INSERT INTO `comments` (`post_id`, `description`, `name`, `email`, `webpage`) VALUES (2, 'Não gostei do post, achei ofensivo', 'Alisson', 'chiquitto@gmail.com', 'http://chiquitto.com.br');
+INSERT INTO `comments` (`post_id`, `description`, `name`, `email`, `webpage`) VALUES (2, 'Não gostei do post, achei ofensivo', 'Alisson', 'chiquitto@gmail.com', 'http://chiquitto.com.br');
+INSERT INTO `comments` (`post_id`, `description`, `name`, `email`, `webpage`) VALUES (2, 'Não gostei do post, achei ofensivo', 'Alisson', 'chiquitto@gmail.com', 'http://chiquitto.com.br');
+INSERT INTO `comments` (`post_id`, `description`, `name`, `email`, `webpage`) VALUES (2, 'Não gostei do post, achei ofensivo', 'Alisson', 'chiquitto@gmail.com', 'http://chiquitto.com.br');

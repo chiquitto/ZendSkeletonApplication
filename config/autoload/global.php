@@ -33,6 +33,7 @@ return array(
         ),
         'resources' => array(
             'Application\Controller\Index.index',
+            'Application\Controller\Index.comments',
             'Admin\Controller\Index.save',
             'Admin\Controller\Index.delete',
             'Admin\Controller\Auth.index',
@@ -43,6 +44,7 @@ return array(
             'visitante' => array(
                 'allow' => array(
                     'Application\Controller\Index.index',
+                    'Application\Controller\Index.comments',
                     'Admin\Controller\Auth.index',
                     'Admin\Controller\Auth.login',
                     'Admin\Controller\Auth.logout',
