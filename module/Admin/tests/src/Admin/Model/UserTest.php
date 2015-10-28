@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Model;
 
 use Core\Test\ModelTestCase;
@@ -9,23 +8,37 @@ use Zend\InputFilter\InputFilterInterface;
 /**
  * @group Model
  */
-class UserTest extends ModelTestCase {
+class UserTest extends ModelTestCase
+{
+    /**
+     * EntityManager
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $em;
 
-    public function testGetInputFilter() {
+    public function setup()
+    {
+        parent::setup();
+        $this->em = $this->serviceManager->get('Doctrine\ORM\EntityManager');
+    }
+
+    public function testGetInputFilter()
+    {
         $user = new User();
         $if = $user->getInputFilter();
         //testa se existem filtros
         $this->assertInstanceOf("Zend\InputFilter\InputFilter", $if);
         return $if;
     }
-
+ 
     /**
      * @depends testGetInputFilter
      */
-    public function testInputFilterValid($if) {
+    public function testInputFilterValid($if)
+    {
         //testa os filtros
         $this->assertEquals(6, $if->count());
-
+ 
         $this->assertTrue($if->has('id'));
         $this->assertTrue($if->has('username'));
         $this->assertTrue($if->has('password'));
@@ -33,35 +46,38 @@ class UserTest extends ModelTestCase {
         $this->assertTrue($if->has('valid'));
         $this->assertTrue($if->has('role'));
     }
-
+    
     /**
      * @expectedException Core\Model\EntityException
      */
-    public function testInputFilterInvalidoUsername() {
+    public function testInputFilterInvalidoUsername()
+    {
         //testa se os filtros estão funcionando
         $user = new User();
         //username só pode ter 50 caracteres
         $user->username = 'Lorem Ipsum é simplesmente uma simulação de texto da indústria 
         tipográfica e de impressos. Lorem Ipsum é simplesmente uma simulação de texto 
         da indústria tipográfica e de impressos';
-    }
+    }        
 
     /**
      * @expectedException Core\Model\EntityException
      */
-    public function testInputFilterInvalidoRole() {
+    public function testInputFilterInvalidoRole()
+    {
         //testa se os filtros estão funcionando
         $user = new User();
         //role só pode ter 20 caracteres
         $user->role = 'Lorem Ipsum é simplesmente uma simulação de texto da indústria 
         tipográfica e de impressos. Lorem Ipsum é simplesmente uma simulação de texto 
         da indústria tipográfica e de impressos';
-    }
+    }        
 
     /**
      * Teste de inserção de um user válido
      */
-    public function testInsert() {
+    public function testInsert()
+    {
         $user = $this->addUser();
 
         //testa o filtro de tags e espaços
@@ -74,49 +90,51 @@ class UserTest extends ModelTestCase {
      * @expectedException Core\Model\EntityException
      * @expectedExceptionMessage Input inválido: username =
      */
-    public function testInsertInvalido() {
+    public function testInsertInvalido()
+    {
         $user = new user();
         $user->name = 'teste';
         $user->username = '';
 
-        $saved = $this->getTable('Admin\Model\user')->save($user);
-    }
+        $this->em->persist($user);
+        $this->em->flush();
+    }    
 
-    public function testUpdate() {
-        $tableGateway = $this->getTable('Admin\Model\User');
+    public function testUpdate()
+    {
         $user = $this->addUser();
 
         $id = $user->id;
 
         $this->assertEquals(1, $id);
 
-        $user = $tableGateway->get($id);
+        $user = $this->em->find('Admin\Model\User', $id);
         $this->assertEquals('Steve Jobs', $user->name);
 
         $user->name = 'Bill <br>Gates';
-        $updated = $tableGateway->save($user);
+        $this->em->persist($user);
+        $this->em->flush();
 
-        $user = $tableGateway->get($id);
+        $user = $this->em->find('Admin\Model\User', $id);
         $this->assertEquals('Bill Gates', $user->name);
     }
 
-    /**
-     * @expectedException Core\Model\EntityException
-     * @expectedExceptionMessage Could not find row 1
-     */
-    public function testDelete() {
-        $tableGateway = $this->getTable('Admin\Model\User');
+    public function testDelete()
+    {
         $user = $this->addUser();
 
         $id = $user->id;
 
-        $deleted = $tableGateway->delete($id);
-        $this->assertEquals(1, $deleted); //numero de linhas excluidas
+        $user = $this->em->find('Admin\Model\User', $id);
+        $this->em->remove($user);
+        $this->em->flush();
 
-        $user = $tableGateway->get($id);
+        $user = $this->em->find('Admin\Model\User', $id);
+        $this->assertNull($user);
     }
 
-    private function addUser() {
+    private function addUser()
+    {
         $user = new User();
         $user->username = 'steve';
         $user->password = md5('apple');
@@ -124,8 +142,10 @@ class UserTest extends ModelTestCase {
         $user->valid = 1;
         $user->role = 'admin';
 
-        $saved = $this->getTable('Admin\Model\User')->save($user);
-        return $saved;
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
     }
 
 }
