@@ -25,16 +25,6 @@ return array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
     ),
-    'doctrine' => array(
-        'connection' => array(
-            'driver' => 'pdo_mysql',
-            'host' => 'localhost',
-            'port' => '3306',
-            'user' => 'root',
-            'password' => '123456',
-            'dbname' => 'zf2napratica'
-        )
-    ),
     'acl' => array(
         'roles' => array(
             'visitante' => null,
@@ -49,9 +39,6 @@ return array(
             'Admin\Controller\Auth.index',
             'Admin\Controller\Auth.login',
             'Admin\Controller\Auth.logout',
-            'Admin\Controller\User.index',
-            'Admin\Controller\User.save',
-            'Admin\Controller\User.delete',
         ),
         'privilege' => array(
             'visitante' => array(
@@ -71,9 +58,6 @@ return array(
             'admin' => array(
                 'allow' => array(
                     'Admin\Controller\Index.delete',
-                    'Admin\Controller\User.index',
-                    'Admin\Controller\User.save',
-                    'Admin\Controller\User.delete',
                 )
             ),
         )

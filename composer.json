@@ -7,11 +7,9 @@
         "zf2"
     ],
     "homepage": "http://framework.zend.com/",
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.2.6",
-        "phpunit/phpunit": "3.7.*",
-        "doctrine/orm": "^2.6@dev"
+        "phpunit/phpunit": "3.7.*"
     }
 }
