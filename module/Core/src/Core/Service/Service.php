@@ -41,7 +41,7 @@ abstract class Service implements ServiceManagerAwareInterface
 	protected function getTable($table)
     {
         $sm = $this->getServiceManager();
-        $dbAdapter = $sm->get('DbAdapter');
+        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
         $tableGateway = new TableGateway($dbAdapter, $table, new $table);
         $tableGateway->initialize();
 

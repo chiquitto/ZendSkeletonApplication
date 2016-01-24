@@ -43,7 +43,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'DbAdapter' => 'Core\Db\AdapterServiceFactory'
+                // 'Zend\Db\Adapter\Adapter' => 'Core\Db\AdapterServiceFactory',
             )
         );
     }

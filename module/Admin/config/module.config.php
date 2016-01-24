@@ -62,23 +62,23 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Admin\Service\Auth' => function($sm) {
-                $dbAdapter = $sm->get('DbAdapter');
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                 return new Admin\Service\Auth($dbAdapter);
             },
-            'Cache' => function($sm) {
-                $config = include __DIR__ . '/../../../config/application.config.php';
-                $cache = \Zend\Cache\StorageFactory::factory(
-                    array(
-                        'adapter' => $config['cache']['adapter'],
-                        'plugins' => array(
-                            //'exception_handler' => array('throw_exceptions' => false),
-                            'Serializer'
-                        ),
-                    )
-                );
-
-                return $cache;
-            },
+            //'Cache' => function($sm) {
+            //    $config = include __DIR__ . '/../../../config/application.config.php';
+            //    $cache = \Zend\Cache\StorageFactory::factory(
+            //        array(
+            //            'adapter' => $config['cache']['adapter'],
+            //            'plugins' => array(
+            //                //'exception_handler' => array('throw_exceptions' => false),
+            //                'Serializer'
+            //            ),
+            //        )
+            //    );
+            //
+            //    return $cache;
+            //},
             'Session' => function($sm) {
                 return new Zend\Session\Container('ZF2napratica');
             },
