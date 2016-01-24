@@ -83,7 +83,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function getTable($table)
     {
         $sm = $this->serviceManager;
-        $dbAdapter = $sm->get('DbAdapter');
+        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
         $tableGateway = new TableGateway($dbAdapter, $table, new $table);
         $tableGateway->initialize();
         
@@ -152,6 +152,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getAdapter() 
     {
-        return $this->serviceManager->get('DbAdapter');
+        return $this->serviceManager->get('Zend\Db\Adapter\Adapter');
     }
 }

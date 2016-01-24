@@ -9,7 +9,9 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.6",
-        "phpunit/phpunit": "3.7.*"
+        "zendframework/zendframework": "*",
+        "phpunit/phpunit": "3.7.*",
+        "zendframework/zend-developer-tools": "dev-master",
+        "bjyoungblood/bjy-profiler": "^1.1"
     }
 }
